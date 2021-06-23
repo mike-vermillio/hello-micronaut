@@ -2,6 +2,19 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+commands:
+  build:
+    steps:
+      - run: ./mvnw -B -DskipTests clean package
+  
+  test:
+    steps:
+      - run: ./mvnw test
+  
+  deploy:
+    steps:
+      - run: ls -la **
+
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
   build-and-test:  
@@ -12,16 +25,17 @@ jobs:
     docker:
       - image: cimg/openjdk:11.0
     steps:
-      # Checkout the code as the first step.
       - checkout
-      # Use mvn clean and package as the standard maven build phase
-      - run:
-          name: Build
-          command: mvn -B -DskipTests clean package
-      # Then run your tests!
-      - run:
-          name: Test
-          command: mvn test
+      - build
+      - test
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - deploy
+    requires:
+      - build-and-test
 
 workflows:
   # Below is the definition of your workflow.
@@ -31,3 +45,4 @@ workflows:
   sample: 
     jobs:
       - build-and-test
+      - deploy

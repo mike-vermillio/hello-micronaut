@@ -25,14 +25,12 @@ commands:
   
   test:
     steps:
-      - checkout
-      - cache_restore
       - run: ./mvnw test
-      - cache_save
   
   deploy:
     steps:
-      - run: ls -la **
+      - run: pwd
+      - run: ls -la ./*
 
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.

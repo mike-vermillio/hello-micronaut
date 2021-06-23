@@ -34,8 +34,6 @@ jobs:
       - image: google/cloud-sdk
     steps:
       - deploy
-    requires:
-      - build-and-test
 
 workflows:
   # Below is the definition of your workflow.
@@ -45,4 +43,6 @@ workflows:
   sample: 
     jobs:
       - build-and-test
-      - deploy
+      - deploy:
+          requires:
+            - build-and-test

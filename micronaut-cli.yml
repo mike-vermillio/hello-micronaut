@@ -1,0 +1,6 @@
+applicationType: function
+defaultPackage: hello.micronaut
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [app-name, gcp-cloud-trace, google-cloud-function, java, junit, logback, maven, readme, shade, yaml]
